@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+	<!-- <script src="vue.js"></script> -->
+
+	<link rel="stylesheet" type="text/css" href="src/style.css">
+	<title>Green_menuβ</title>
+</head>
+
+<body>
+	<main id="list">
+
+		<!-- Header -->
+		<header>
+			<p>慶應義塾高等学校学生食堂</p>
+			<h1>Green House</h1>
+			<nav>
+				<ul>
+					<li v-for="(cat,index) in cats" v-bind:class="{'active':isActive===index}"><a v-on:click="select(index);">{{cat.message}}</a></li>
+				</ul>
+			</nav>
+		</header>
+
+		<!-- おすすめタブの時のみ表示される記事 -->
+		<div class="special" v-show="special_show">
+			<ul>
+				<li @click="dayclick(0)" v-bind:class="{'sp_active':calendarActive===0}">{{sp.day[0]}}<br><span class="week">(月)</span></li>
+				<li @click="dayclick(1)" v-bind:class="{'sp_active':calendarActive===1}">{{sp.day[1]}}<br><span class="week">(火)</span></li>
+				<li @click="dayclick(2)" v-bind:class="{'sp_active':calendarActive===2}">{{sp.day[2]}}<br><span class="week">(水)</span></li>
+				<li @click="dayclick(3)" v-bind:class="{'sp_active':calendarActive===3}">{{sp.day[3]}}<br><span class="week">(木)</span></li>
+				<li @click="dayclick(4)" v-bind:class="{'sp_active':calendarActive===4}">{{sp.day[4]}}<br><span class="week">(金)</span></li>
+			</ul>
+			<section class="menu">
+				<div>
+					<article>
+						<h3　class="set">慶應ランチ</h3>
+						<h3 class="title">
+							<nobr>{{sp.dishes.lunch}}</nobr>
+						</h3>
+						<h4>{{sp.dishes.lunch_price}}円</h4>
+					</article>
+				</div>
+				<div>
+					<article>
+						<h3 class="set">ライスバラエティ</h3>
+						<h3 class="title">
+							<nobr>{{sp.dishes.rice}}</nobr>
+						</h3>
+						<h4>{{sp.dishes.rice_price}}円</h4>
+					</article>
+				</div>
+				<!-- 将来アスリート定食が復活したとき用 -->
+				<!-- <div>
+					<article>
+						<h3 class="set">アスリート定食</h3>
+						<h3>{{sp.dishes.athlete}}</h3>
+						<h4>{{sp.dishes.athelte_price}}</h4>
+					</article>
+				</div> -->
+
+			</section>
+
+		</div>
+
+		<!-- 各メニューを表示するセクション -->
+		<section v-show="menu_show" class="menu">
+			<div v-for="dish in dishes">
+				<article>
+					<h3 class="title">
+						<nobr>{{dish.title}}</nobr>
+					</h3>
+					<p>{{dish.article}}</p>
+					<h4>{{dish.price}}円</h4>
+				</article>
+			</div>
+
+		</section>
+
+	</main>
+	<footer>2018 Keio Senior High School Student Council All Rights Reserved</footer>
+<!-- スクリプト遅延実行 -->
+	<script src="dist/main.js"></script>
+</body>
+
+</html>
