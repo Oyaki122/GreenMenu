@@ -1,6 +1,8 @@
 import Vue from 'vue';
 
 import '@babel/polyfill';
+import csvConvert from './csvConvert';
+import categorySprit from './categorySprit';
 
 let articleArray;
 let specialArray;
@@ -43,50 +45,50 @@ const vue = new Vue({
         });
     },
 });
-const csvConvert = (data) => {
-    const csvArray = data.split(/\r\n|\n|\r /); // 1行ごとに分割する
-    const result = [];
+// const csvConvert = (data) => {
+//     const csvArray = data.split(/\r\n|\n|\r /); // 1行ごとに分割する
+//     const result = [];
 
-    // 1行目から「項目名」の配列を生成する
-    const items = csvArray[0].split(',');
+//     // 1行目から「項目名」の配列を生成する
+//     const items = csvArray[0].split(',');
 
-    // CSVデータの配列の各行をループ処理する
-    // // 配列の先頭要素(行)は項目名のため処理対象外
-    // // 配列の最終要素(行)は空のため処理対象外
-    for (let i = 1; i < csvArray.length - 1; i++) {
-        const aLine = {};
-        // カンマで区切られた各データに分割する
-        const csvArrayD = csvArray[i].split(',');
-        // // 各データをループ処理する
-        for (let j = 0; j < items.length; j++) {
-            // 要素名：items[j]
-            // データ：csvArrayD[j]
-            aLine[items[j]] = csvArrayD[j];
-        }
-        result.push(aLine);
-    }
+//     // CSVデータの配列の各行をループ処理する
+//     // // 配列の先頭要素(行)は項目名のため処理対象外
+//     // // 配列の最終要素(行)は空のため処理対象外
+//     for (let i = 1; i < csvArray.length - 1; i++) {
+//         const aLine = {};
+//         // カンマで区切られた各データに分割する
+//         const csvArrayD = csvArray[i].split(',');
+//         // // 各データをループ処理する
+//         for (let j = 0; j < items.length; j++) {
+//             // 要素名：items[j]
+//             // データ：csvArrayD[j]
+//             aLine[items[j]] = csvArrayD[j];
+//         }
+//         result.push(aLine);
+//     }
 
-    return result;
-};
+//     return result;
+// };
 
-const categorySprit = (rowObj) => {
-    const splittedDishes = [];
-    const categoryArray = [];
-    for (let i = 0; i < rowObj.length; i++) {
-        const categoryPlace = categoryArray.indexOf(rowObj[i].category);
-        if (categoryPlace !== -1) {
-            splittedDishes[categoryPlace].data.push(rowObj[i]);
-        } else {
-            categoryArray.push(rowObj[i].category);
-            splittedDishes.push({
-                title: rowObj[i].category,
-                data: [rowObj[i]],
-            });
-        }
-    }
+// const categorySprit = (rowObj) => {
+//     const splittedDishes = [];
+//     const categoryArray = [];
+//     for (let i = 0; i < rowObj.length; i++) {
+//         const categoryPlace = categoryArray.indexOf(rowObj[i].category);
+//         if (categoryPlace !== -1) {
+//             splittedDishes[categoryPlace].data.push(rowObj[i]);
+//         } else {
+//             categoryArray.push(rowObj[i].category);
+//             splittedDishes.push({
+//                 title: rowObj[i].category,
+//                 data: [rowObj[i]],
+//             });
+//         }
+//     }
 
-    return { dishes: splittedDishes, category: categoryArray };
-};
+//     return { dishes: splittedDishes, category: categoryArray };
+// };
 
 const specialSprit = (rowJSON) => {
     const monday = rowJSON[5].day;
@@ -246,3 +248,4 @@ storageLoad();
 //         }
 //     });
 // });
+navigator.serviceWorker.register('../service-worker.js').catch(console.error.bind(console));
